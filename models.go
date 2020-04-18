@@ -2,10 +2,11 @@ package newsblur
 
 type ApiFeed struct {
 	ID          int    `json:"id"`
-	Ps          int    `json:"ps"` // positive/focus count
-	Nt          int    `json:"nt"` // neutral/unread count
-	Ng          int    `json:"ng"` // negative/hidden count
-	FeedAddress string `json:"feed_address"`
+	Ps          int    `json:"ps"`           // positive/focus count
+	Nt          int    `json:"nt"`           // neutral/unread count
+	Ng          int    `json:"ng"`           // negative/hidden count
+	FeedAddress string `json:"feed_address"` // link to the feed (usually .xml/.atom)
+	FeedLink    string `json:"feed_link"`    // link to the website
 	FeedTitle   string `json:"feed_title"`
 }
 
