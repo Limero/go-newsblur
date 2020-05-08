@@ -133,3 +133,47 @@ func ApiMarkStoryHashAsUnread(client *http.Client, input *MarkStoryHashAsUnreadI
 
 	return output, nil
 }
+
+/*
+	Mark a story as starred (saved).
+	POST /reader/mark_story_hash_as_starred
+	https://www.newsblur.com/api#/reader/mark_story_hash_as_starred
+*/
+func ApiMarkStoryHashAsStarred(client *http.Client, input *MarkStoryHashAsStarredInput) (output *MarkStoryHashAsStarredOutput, err error) {
+	formData := url.Values{
+		"story_hash": {input.StoryHash},
+	}
+
+	body, err := PostWithBody(client, server+"/reader/mark_story_hash_as_starred", formData)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output, nil
+}
+
+/*
+	Mark a story as unstarred (unsaved).
+	POST /reader/mark_story_hash_as_unstarred
+	https://www.newsblur.com/api#/reader/mark_story_hash_as_unstarred
+*/
+func ApiMarkStoryHashAsUnstarred(client *http.Client, input *MarkStoryHashAsUnstarredInput) (output *MarkStoryHashAsUnstarredOutput, err error) {
+	formData := url.Values{
+		"story_hash": {input.StoryHash},
+	}
+
+	body, err := PostWithBody(client, server+"/reader/mark_story_hash_as_unstarred", formData)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output, nil
+}

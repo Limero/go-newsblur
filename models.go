@@ -25,6 +25,7 @@ type ApiStory struct {
 	HasModifications bool   `json:"has_modifications"`
 	StoryTitle       string `json:"story_title"`
 	StoryContent     string `json:"story_content"`
+	Starred          bool   `json:"starred"`
 }
 
 type LoginInput struct {
@@ -74,4 +75,18 @@ type MarkStoryHashAsUnreadInput struct {
 }
 
 type MarkStoryHashAsUnreadOutput struct {
+}
+
+type MarkStoryHashAsStarredInput struct {
+	StoryHash string
+}
+
+type MarkStoryHashAsStarredOutput struct {
+}
+
+type MarkStoryHashAsUnstarredInput struct {
+	StoryHash string
+}
+
+type MarkStoryHashAsUnstarredOutput struct {
 }
