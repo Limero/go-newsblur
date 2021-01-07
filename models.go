@@ -97,6 +97,9 @@ type ClassifierInput struct {
 
 type ClassifierOutput struct {
 	Payload struct {
-		Titles map[string]int `json:"titles"`
+		Authors map[string]int `json:"authors"`
+		Feeds   map[string]int `json:"feeds"`
+		Titles  map[string]int `json:"titles"`
+		Tags    map[string]int `json:"tags"`
 	} `json:"payload"`
 }
