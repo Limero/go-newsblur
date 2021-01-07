@@ -90,3 +90,13 @@ type MarkStoryHashAsUnstarredInput struct {
 
 type MarkStoryHashAsUnstarredOutput struct {
 }
+
+type ClassifierInput struct {
+	FeedID string
+}
+
+type ClassifierOutput struct {
+	Payload struct {
+		Titles map[string]int `json:"titles"`
+	} `json:"payload"`
+}
