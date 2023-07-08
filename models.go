@@ -28,11 +28,6 @@ type ApiStory struct {
 	Starred          bool   `json:"starred"`
 }
 
-type LoginInput struct {
-	Username string
-	Password string
-}
-
 type LoginOutput struct {
 	Authenticated bool        `json:"authenticated"`
 	Code          int         `json:"code"`
@@ -45,54 +40,24 @@ type ReaderFeedsOutput struct {
 	Feeds   []ApiFeed     `json:"feeds"`
 }
 
-type ReaderFeedInput struct {
-	FeedID string
-	Page   string
-}
-
 type ReaderFeedOutput struct {
 	Stories []ApiStory `json:"stories"`
-}
-
-type ReaderRiverStoriesInput struct {
-	Feeds []string
-	Page  string
 }
 
 type ReaderRiverStoriesOutput struct {
 	Stories []ApiStory `json:"stories"`
 }
 
-type MarkStoryHashesAsReadInput struct {
-	StoryHash []string
-}
-
 type MarkStoryHashesAsReadOutput struct {
-}
-
-type MarkStoryHashAsUnreadInput struct {
-	StoryHash string
 }
 
 type MarkStoryHashAsUnreadOutput struct {
 }
 
-type MarkStoryHashAsStarredInput struct {
-	StoryHash string
-}
-
 type MarkStoryHashAsStarredOutput struct {
 }
 
-type MarkStoryHashAsUnstarredInput struct {
-	StoryHash string
-}
-
 type MarkStoryHashAsUnstarredOutput struct {
-}
-
-type ClassifierInput struct {
-	FeedID string
 }
 
 type ClassifierOutput struct {
