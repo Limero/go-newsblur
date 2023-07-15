@@ -1,5 +1,7 @@
 package newsblur
 
+type UNIMPLEMENTED struct{}
+
 type ApiFeed struct {
 	ID          int    `json:"id"`
 	Ps          int    `json:"ps"`           // positive/focus count

@@ -29,6 +29,16 @@ func (nb *Newsblur) ReaderFeed(feedID string, page int) (output *ReaderFeedOutpu
 	return output, nil
 }
 
+// Retrieve a user's starred stories.
+// GET /reader/starred_stories
+// https://newsblur.com/api#/reader/starred_stories
+func (nb *Newsblur) ReaderStarredStories(UNIMPLEMENTED) {}
+
+// Retrieve the story hashes of a user's starred stories.
+// GET /reader/starred_story_hashes
+// https://newsblur.com/api#/reader/starred_story_hashes
+func (nb *Newsblur) ReaderStarredStoryHashes(UNIMPLEMENTED) {}
+
 // Retrieve stories from a collection of feeds
 // GET /reader/river_stories
 // https://www.newsblur.com/api#/reader/river_stories
@@ -53,6 +63,16 @@ func (nb *Newsblur) ReaderRiverStories(feeds []string, page int) (output *Reader
 
 	return output, nil
 }
+
+// Retrieve up to 100 stories when specifying by story_hash.
+// GET /reader/river_stories
+// https://newsblur.com/api#/reader/river_stories
+func (nb *Newsblur) ReaderRiverStories_StoryHash(UNIMPLEMENTED) {}
+
+// The story_hashes of all unread stories.
+// GET /reader/unread_story_hashes
+// https://newsblur.com/api#/reader/unread_story_hashes
+func (nb *Newsblur) ReaderUnreadStoryHashes(UNIMPLEMENTED) {}
 
 // Mark stories as read using their unique story_hash.
 // POST /reader/mark_story_hashes_as_read
