@@ -35,9 +35,62 @@ type LoginOutput struct {
 	Result        string      `json:"result"`
 }
 
-type ReaderFeedsOutput struct {
+type ReaderFeedsOutputRaw struct {
 	Folders []interface{} `json:"folders"`
 	Feeds   []ApiFeed     `json:"feeds"`
+}
+
+func (raw ReaderFeedsOutputRaw) toOutput() (*ReaderFeedsOutput, error) {
+	output := ReaderFeedsOutput{
+		Folders: make([]Folder, 0),
+		Feeds:   raw.Feeds,
+	}
+
+	emptyFolder := Folder{
+		Title:   "",
+		FeedIDs: []int{},
+	}
+
+	for _, element := range raw.Folders {
+		switch element.(type) {
+		case float64, float32:
+			// Feed without folder
+			emptyFolder.FeedIDs = append(emptyFolder.FeedIDs, int(element.(float64)))
+		case map[string]interface{}:
+			// Feed with folder
+			folders := element.(map[string]interface{})
+			for folder, feeds := range folders {
+				feedIDs := []int{}
+				for _, feedId := range feeds.([]interface{}) {
+					feedIDs = append(feedIDs, int(feedId.(float64)))
+				}
+
+				// Add folder if it's not empty
+				if len(feedIDs) > 0 {
+					output.Folders = append(output.Folders, Folder{
+						Title:   folder,
+						FeedIDs: feedIDs,
+					})
+				}
+			}
+		}
+	}
+
+	if len(emptyFolder.FeedIDs) > 0 {
+		output.Folders = append(output.Folders, emptyFolder)
+	}
+
+	return &output, nil
+}
+
+type Folder struct {
+	Title   string
+	FeedIDs []int
+}
+
+type ReaderFeedsOutput struct {
+	Folders []Folder
+	Feeds   []ApiFeed `json:"feeds"`
 }
 
 type ReaderFeedOutput struct {

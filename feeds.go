@@ -11,9 +11,10 @@ func (nb *Newsblur) ReaderFeeds() (output *ReaderFeedsOutput, err error) {
 		return nil, err
 	}
 
-	if err := json.Unmarshal(body, &output); err != nil {
+	var raw *ReaderFeedsOutputRaw
+	if err := json.Unmarshal(body, &raw); err != nil {
 		return nil, err
 	}
 
-	return output, nil
+	return raw.toOutput()
 }

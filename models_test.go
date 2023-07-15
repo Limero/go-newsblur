@@ -3,6 +3,9 @@ package newsblur
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestReaderFeedsOutput(t *testing.T) {
@@ -111,9 +114,30 @@ func TestReaderFeedsOutput(t *testing.T) {
 }
 `
 
-	var output ReaderFeedsOutput
+	var raw ReaderFeedsOutputRaw
 
-	if err := json.Unmarshal([]byte(in), &output); err != nil {
-		t.Errorf("Error: %v", err)
-	}
+	err := json.Unmarshal([]byte(in), &raw)
+	require.NoError(t, err)
+
+	output, err := raw.toOutput()
+	require.NoError(t, err)
+
+	assert.Len(t, output.Folders, 2)
+	assert.Equal(t, []Folder{
+		{
+			Title: "BSD",
+			FeedIDs: []int{
+				7600810,
+				8312062,
+			},
+		},
+		{
+			Title: "",
+			FeedIDs: []int{
+				1000000,
+				1111111,
+			},
+		},
+	}, output.Folders)
+
 }
