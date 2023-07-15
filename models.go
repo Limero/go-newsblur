@@ -13,7 +13,7 @@ type ApiFeed struct {
 type ApiStory struct {
 	StoryAuthors     string `json:"story_authors"`
 	StoryPermalink   string `json:"story_permalink"`
-	StoryTimestamp   string `json:"story_timestamp"`
+	StoryTimestamp   int64  `json:"story_timestamp,string"`
 	StoryHash        string `json:"story_hash"`
 	ID               string `json:"id"`
 	StoryDate        string `json:"story_date"`
