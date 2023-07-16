@@ -34,7 +34,26 @@ func (nb *Newsblur) ReaderFeed(feedID string, page int) (output *ReaderFeedOutpu
 // Retrieve a user's starred stories.
 // GET /reader/starred_stories
 // https://newsblur.com/api#/reader/starred_stories
-func (nb *Newsblur) ReaderStarredStories(UNIMPLEMENTED) {}
+func (nb *Newsblur) ReaderStarredStories(page int) (output *StoriesOutput, err error) {
+	if page == 0 {
+		page = 1
+	}
+
+	formData := url.Values{
+		"page": {strconv.Itoa(page)},
+	}
+
+	body, err := PostWithBody(nb.client, nb.Hostname+"/reader/starred_stories", formData)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output, nil
+}
 
 // Retrieve the story hashes of a user's starred stories.
 // GET /reader/starred_story_hashes
@@ -59,7 +78,7 @@ func (nb *Newsblur) ReaderStarredStoryHashes() ([]string, error) {
 // Retrieve stories from a collection of feeds
 // GET /reader/river_stories
 // https://www.newsblur.com/api#/reader/river_stories
-func (nb *Newsblur) ReaderRiverStories(feeds []string, page int) (output *ReaderRiverStoriesOutput, err error) {
+func (nb *Newsblur) ReaderRiverStories(feeds []string, page int) (output *StoriesOutput, err error) {
 	if page == 0 {
 		page = 1
 	}

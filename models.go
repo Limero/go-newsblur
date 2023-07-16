@@ -99,7 +99,7 @@ type ReaderFeedOutput struct {
 	Stories []ApiStory `json:"stories"`
 }
 
-type ReaderRiverStoriesOutput struct {
+type StoriesOutput struct {
 	Stories []ApiStory `json:"stories"`
 }
 
