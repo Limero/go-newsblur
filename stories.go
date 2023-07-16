@@ -89,7 +89,22 @@ func (nb *Newsblur) ReaderRiverStories_StoryHash(UNIMPLEMENTED) {}
 // The story_hashes of all unread stories.
 // GET /reader/unread_story_hashes
 // https://newsblur.com/api#/reader/unread_story_hashes
-func (nb *Newsblur) ReaderUnreadStoryHashes(UNIMPLEMENTED) {}
+func (nb *Newsblur) ReaderUnreadStoryHashes() ([]string, error) {
+	body, err := GetWithBody(
+		nb.client,
+		nb.Hostname+"/reader/unread_story_hashes",
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var output *apimodels.ReaderUnreadStoryHashes
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output.ToOutput(), nil
+}
 
 // Mark stories as read using their unique story_hash.
 // POST /reader/mark_story_hashes_as_read
