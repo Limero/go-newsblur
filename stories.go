@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+
+	"github.com/limero/go-newsblur/apimodels"
 )
 
 // Retrieve stories from a single feed.
@@ -37,7 +39,22 @@ func (nb *Newsblur) ReaderStarredStories(UNIMPLEMENTED) {}
 // Retrieve the story hashes of a user's starred stories.
 // GET /reader/starred_story_hashes
 // https://newsblur.com/api#/reader/starred_story_hashes
-func (nb *Newsblur) ReaderStarredStoryHashes(UNIMPLEMENTED) {}
+func (nb *Newsblur) ReaderStarredStoryHashes() ([]string, error) {
+	body, err := GetWithBody(
+		nb.client,
+		nb.Hostname+"/reader/starred_story_hashes",
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var output *apimodels.ReaderStarredStoryHashes
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output.StarredStoryHashes, nil
+}
 
 // Retrieve stories from a collection of feeds
 // GET /reader/river_stories
