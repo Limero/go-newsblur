@@ -39,11 +39,10 @@ func (nb *Newsblur) ReaderStarredStories(page int) (output *StoriesOutput, err e
 		page = 1
 	}
 
-	formData := url.Values{
-		"page": {strconv.Itoa(page)},
-	}
-
-	body, err := PostWithBody(nb.client, nb.Hostname+"/reader/starred_stories", formData)
+	body, err := GetWithBody(
+		nb.client,
+		fmt.Sprintf("%s/reader/starred_stories?page=%d", nb.Hostname, page),
+	)
 	if err != nil {
 		return nil, err
 	}
