@@ -102,7 +102,22 @@ func (nb *Newsblur) ReaderRiverStories(feeds []string, page int) (output *Storie
 // Retrieve up to 100 stories when specifying by story_hash.
 // GET /reader/river_stories
 // https://newsblur.com/api#/reader/river_stories
-func (nb *Newsblur) ReaderRiverStories_StoryHash(UNIMPLEMENTED) {}
+func (nb *Newsblur) ReaderRiverStories_StoryHash(storyHash []string) (output *StoriesOutput, err error) {
+	formData := url.Values{
+		"h": storyHash,
+	}
+
+	body, err := PostWithBody(nb.client, nb.Hostname+"/reader/river_stories", formData)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal(body, &output); err != nil {
+		return nil, err
+	}
+
+	return output, nil
+}
 
 // The story_hashes of all unread stories.
 // GET /reader/unread_story_hashes
